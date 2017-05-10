@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDemo", "SignalRDemo\SignalRDemo.csproj", "{A594234D-35F3-48B1-8851-079CF68F3C7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalRDemo.Tests", "SignalRDemo.Tests\SignalRDemo.Tests.csproj", "{7AA6F66D-B83C-4913-A47D-F49E8DEABEA0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A594234D-35F3-48B1-8851-079CF68F3C7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A594234D-35F3-48B1-8851-079CF68F3C7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A594234D-35F3-48B1-8851-079CF68F3C7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A594234D-35F3-48B1-8851-079CF68F3C7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AA6F66D-B83C-4913-A47D-F49E8DEABEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AA6F66D-B83C-4913-A47D-F49E8DEABEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AA6F66D-B83C-4913-A47D-F49E8DEABEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AA6F66D-B83C-4913-A47D-F49E8DEABEA0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
