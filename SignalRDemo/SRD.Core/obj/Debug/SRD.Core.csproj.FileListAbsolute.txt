@@ -1,0 +1,4 @@
+F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Core\bin\Debug\SRD.Core.dll
+F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Core\bin\Debug\SRD.Core.pdb
+F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Core\obj\Debug\SRD.Core.dll
+F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Core\obj\Debug\SRD.Core.pdb

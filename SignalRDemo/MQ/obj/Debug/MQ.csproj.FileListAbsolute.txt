@@ -1,0 +1,4 @@
+F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\bin\Debug\MQ.dll
+F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\bin\Debug\MQ.pdb
+F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.dll
+F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.pdb
