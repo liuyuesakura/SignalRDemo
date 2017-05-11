@@ -2,3 +2,7 @@ F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Helper\bin\Debug\SRD.Helper.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Helper\bin\Debug\SRD.Helper.pdb
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Helper\obj\Debug\SRD.Helper.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Helper\obj\Debug\SRD.Helper.pdb
+E:\SignalRDemo\SignalRDemo\SRD.Helper\bin\Debug\SRD.Helper.dll
+E:\SignalRDemo\SignalRDemo\SRD.Helper\bin\Debug\SRD.Helper.pdb
+E:\SignalRDemo\SignalRDemo\SRD.Helper\obj\Debug\SRD.Helper.dll
+E:\SignalRDemo\SignalRDemo\SRD.Helper\obj\Debug\SRD.Helper.pdb
