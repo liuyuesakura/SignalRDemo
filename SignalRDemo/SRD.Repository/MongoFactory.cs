@@ -43,8 +43,9 @@ namespace SRD.Repository
         /// <returns></returns>
         public IMongoDatabase GetMongoDatabase()
         {
-            var client = new MongoClient(_connection);
-            return client.GetDatabase(_database);
+            //var client = new MongoClient(_connection);//"localhost", 27017mongodb://r1.example.net:27017,r2.example.net:27017/
+            var client = new MongoClient("mongodb://localhost:27017/SRD");
+            return client.GetDatabase("SRD");
         }
 
         /// <summary>

@@ -26,5 +26,20 @@ namespace SignalRDemo.Controllers
 
             return View();
         }
+        public JsonResult Reg()
+        {
+            SRD.Model.User user = new SRD.Model.User() 
+            {
+                NickName = "user1",
+                Mobile = "123456",
+                Password = "123456",
+                Email = "123456@haha.com"
+            };
+
+            var userbll = new SRD.MongoBLL.User();
+            bool result = userbll.Insert(user);
+
+            return Json(new { Code = result?0:1,Msg = result?"OK":"Error"},JsonRequestBehavior.AllowGet);
+        }
     }
 }

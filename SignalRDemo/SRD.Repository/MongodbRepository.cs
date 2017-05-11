@@ -79,12 +79,16 @@ namespace SRD.Repository
 
         int IRepository<T>.InsertBatch(IEnumerable<T> items)
         {
-            items.ForEach(x =>
+            //items.ForEach(x =>
+            //{
+            //    x.LastUpdateTime = DateTime.UtcNow;
+            //    x.NeedUpdate = true;
+            //});
+            foreach (var x in items)
             {
                 x.LastUpdateTime = DateTime.UtcNow;
                 x.NeedUpdate = true;
-            });
-
+            }
             GetNewCollection().InsertMany(items);
 
             return items.Count();
@@ -98,7 +102,8 @@ namespace SRD.Repository
             var property = GetBsonIdProperty(obj.GetType());
             if (property != null)
             {
-                filter = Builders<T>.Filter.Eq("_id", property.FastGetValue(obj));
+                //filter = Builders<T>.Filter.Eq("_id", property.FastGetValue(obj));
+                filter = null;
             }
 
             if (filter == null) return 0;
@@ -452,20 +457,21 @@ namespace SRD.Repository
         private PropertyInfo GetBsonIdProperty(Type type)
         {
             //缓存提高性能
-            return DynamicReflectionCache<Type, PropertyInfo>.Get(type, _type =>
-            {
-                //获取BsonId并排除
-                foreach (var p in _type.GetProperties())
-                {
-                    var attribute = CoreHelper.GetMemberAttribute<BsonIdAttribute>(p);
-                    if (attribute != null)
-                    {
-                        return p;
-                    }
-                }
+            //return DynamicReflectionCache<Type, PropertyInfo>.Get(type, _type =>
+            //{
+            //    //获取BsonId并排除
+            //    foreach (var p in _type.GetProperties())
+            //    {
+            //        var attribute = CoreHelper.GetMemberAttribute<BsonIdAttribute>(p);
+            //        if (attribute != null)
+            //        {
+            //            return p;
+            //        }
+            //    }
 
-                return null;
-            });
+            //    return null;
+            //});
+            return null;
         }
     }
 }
