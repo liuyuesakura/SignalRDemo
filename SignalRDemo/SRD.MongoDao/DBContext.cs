@@ -18,7 +18,14 @@ namespace SRD.MongoDao
         {
             get
             {
-                return RepositoryFactory.CreateMongodb<User>(DBNAME, "User");
+                return RepositoryFactory.CreateMongodb<User>(DBNAME, typeof(User).Name);
+            }
+        }
+        public static IMongoRepository<Message> Message
+        {
+            get 
+            {
+                return RepositoryFactory.CreateMongodb<Message>(DBNAME,typeof(Message).Name);
             }
         }
         public static IMongoRepository<T> GetRepository<T>()

@@ -2,12 +2,9 @@ F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Model.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Model.pdb
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.pdb
+E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Model.dll.config
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Model.dll
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Model.pdb
-E:\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.dll
-E:\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.pdb
-E:\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.csprojResolveAssemblyReference.cache
-E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Model.dll.config
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\MongoDB.Bson.dll
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\MongoDB.Driver.Core.dll
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\MongoDB.Driver.dll
@@ -17,3 +14,6 @@ E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\SRD.Core.pdb
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\MongoDB.Bson.xml
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\MongoDB.Driver.xml
 E:\SignalRDemo\SignalRDemo\SRD.Model\bin\Debug\MongoDB.Driver.Core.xml
+E:\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.csprojResolveAssemblyReference.cache
+E:\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.dll
+E:\SignalRDemo\SignalRDemo\SRD.Model\obj\Debug\SRD.Model.pdb

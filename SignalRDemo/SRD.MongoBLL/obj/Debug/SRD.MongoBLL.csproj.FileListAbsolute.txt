@@ -1,12 +1,10 @@
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\SRD.MongoBLL.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\SRD.MongoBLL.pdb
-E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\obj\Debug\SRD.MongoBLL.dll
-E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\obj\Debug\SRD.MongoBLL.pdb
-E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\obj\Debug\SRD.MongoBLL.csprojResolveAssemblyReference.cache
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\SRD.Core.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\SRD.Model.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\SRD.MongoDao.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\SRD.Repository.dll
+E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\MongoDB.Bson.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\MongoDB.Driver.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\LinqKit.dll
@@ -24,4 +22,6 @@ E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\MySoft.Core.pdb
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\MySoft.Core.xml
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\MongoDB.Driver.Core.xml
 E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\EntityFramework.xml
-E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\obj\Debug\SRD.MongoBLL.csprojResolveAssemblyReference.cache
+E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\obj\Debug\SRD.MongoBLL.dll
+E:\SignalRDemo\SignalRDemo\SRD.MongoBLL\obj\Debug\SRD.MongoBLL.pdb

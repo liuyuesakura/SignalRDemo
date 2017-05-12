@@ -22,4 +22,3 @@ E:\SignalRDemo\SignalRDemo\SRD.MongoDao\bin\Debug\EntityFramework.xml
 E:\SignalRDemo\SignalRDemo\SRD.MongoDao\obj\Debug\SRD.MongoDao.csprojResolveAssemblyReference.cache
 E:\SignalRDemo\SignalRDemo\SRD.MongoDao\obj\Debug\SRD.MongoDao.dll
 E:\SignalRDemo\SignalRDemo\SRD.MongoDao\obj\Debug\SRD.MongoDao.pdb
-E:\SignalRDemo\SignalRDemo\SRD.MongoDao\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll

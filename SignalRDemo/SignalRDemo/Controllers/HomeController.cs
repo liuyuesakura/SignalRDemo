@@ -12,20 +12,6 @@ namespace SignalRDemo.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
         public JsonResult Reg()
         {
             SRD.Model.User user = new SRD.Model.User() 
@@ -40,6 +26,12 @@ namespace SignalRDemo.Controllers
             bool result = userbll.Insert(user);
 
             return Json(new { Code = result?0:1,Msg = result?"OK":"Error"},JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult Redis()
+        {
+            bool hali1 = SRD.Cache.CacheManager.SetRedisContent("haliluya","haliluya");
+            string hali2 = SRD.Cache.CacheManager.GetRedisContent("haliluya");
+            return Json(new { Code = hali1?0:1,Msg = hali2},JsonRequestBehavior.AllowGet);
         }
     }
 }
