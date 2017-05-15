@@ -12,3 +12,4 @@ E:\SignalRDemo\SignalRDemo\SRD.Core\bin\Debug\MongoDB.Driver.xml
 E:\SignalRDemo\SignalRDemo\SRD.Core\bin\Debug\MongoDB.Driver.Core.xml
 E:\SignalRDemo\SignalRDemo\SRD.Core\obj\Debug\SRD.Core.dll
 E:\SignalRDemo\SignalRDemo\SRD.Core\obj\Debug\SRD.Core.pdb
+E:\SignalRDemo\SignalRDemo\SRD.Core\obj\Debug\SRD.Core.csprojResolveAssemblyReference.cache

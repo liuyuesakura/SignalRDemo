@@ -10,3 +10,4 @@ E:\SignalRDemo\SignalRDemo\SRD.Cache\bin\Debug\NServiceKit.Redis.xml
 E:\SignalRDemo\SignalRDemo\SRD.Cache\bin\Debug\NServiceKit.Text.xml
 E:\SignalRDemo\SignalRDemo\SRD.Cache\obj\Debug\SRD.Cache.dll
 E:\SignalRDemo\SignalRDemo\SRD.Cache\obj\Debug\SRD.Cache.pdb
+E:\SignalRDemo\SignalRDemo\SRD.Cache\obj\Debug\SRD.Cache.csprojResolveAssemblyReference.cache

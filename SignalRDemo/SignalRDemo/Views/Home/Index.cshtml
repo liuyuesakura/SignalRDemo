@@ -483,7 +483,7 @@ body {
         $.connection.hub.start().done(function () {
             $('#CreatRoom').click(function () {
                 if (roomcount < 2) {
-                    chat.server.creatRoom($("#Roomname").val());
+                    chat.server.createChat($("#Roomname").val());
                     roomcount++;
                 } else {
                     alert("聊天窗口只允许有2个")
