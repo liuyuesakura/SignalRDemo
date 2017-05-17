@@ -2,11 +2,3 @@ F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\bin\Debug\MQ.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\bin\Debug\MQ.pdb
 F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.pdb
-E:\SignalRDemo\SignalRDemo\MQ\bin\Debug\MQ.dll
-E:\SignalRDemo\SignalRDemo\MQ\bin\Debug\MQ.pdb
-E:\SignalRDemo\SignalRDemo\MQ\bin\Debug\RabbitMQ.Client.dll
-E:\SignalRDemo\SignalRDemo\MQ\bin\Debug\RabbitMQ.NETClient.Tool.dll
-E:\SignalRDemo\SignalRDemo\MQ\bin\Debug\RabbitMQ.Client.xml
-E:\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.dll
-E:\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.pdb
-E:\SignalRDemo\SignalRDemo\MQ\obj\Debug\MQ.csprojResolveAssemblyReference.cache
