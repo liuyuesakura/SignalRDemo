@@ -17,7 +17,7 @@ namespace SignalRDemo
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                                namespaces: new string[] { "SignalRDemo.Controllers" }
+                namespaces: new string[] { "SignalRDemo.Controllers" }
             );
         }
     }

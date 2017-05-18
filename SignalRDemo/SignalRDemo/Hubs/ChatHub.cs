@@ -110,5 +110,26 @@ namespace SignalRDemo.Hubs
             });
             Clients.Group(room, new string[0]).sendMessage(message + " " + DateTime.Now.ToShortTimeString());
         }
+        /// <summary>
+        /// 用户上线
+        /// </summary>
+        /// <returns></returns>
+        public override System.Threading.Tasks.Task OnConnected()
+        {
+            var user = OnlineUser.Instance.GetCurrentUser();
+            this.SRDUser = new SRD.Model.User();
+            //获取当前的登录用户
+
+            //更新其他用户的在线列表
+            return base.OnConnected();
+        }
+        public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
+        {
+            //更新其他用户的在线用户列表
+            //string disuser = OnlineUser.Instance.GetCurrentUserID();
+            var disuser = this.SRDUser;
+
+            return base.OnDisconnected(true);
+        }
     }
 }
