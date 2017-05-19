@@ -268,6 +268,10 @@
       <Project>{4a1616e8-615c-4035-b251-18238d15c448}</Project>
       <Name>SRD.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SRD.Helper\SRD.Helper.csproj">
+      <Project>{9633d1b0-5ff5-4f40-a22c-9fa57b073cb0}</Project>
+      <Name>SRD.Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SRD.Model\SRD.Model.csproj">
       <Project>{6f568e69-2e85-46b6-b14f-a88ff9985a63}</Project>
       <Name>SRD.Model</Name>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
+using System.Threading.Tasks;
 
 namespace SignalRDemo.Hubs
 {
@@ -114,20 +115,28 @@ namespace SignalRDemo.Hubs
         /// 用户上线
         /// </summary>
         /// <returns></returns>
-        public override System.Threading.Tasks.Task OnConnected()
+        public override Task OnConnected()
         {
-            var user = OnlineUser.Instance.GetCurrentUser();
-            this.SRDUser = new SRD.Model.User();
-            //获取当前的登录用户
 
-            //更新其他用户的在线列表
+            string connectionid = Context.ConnectionId;
+            Random r = new Random();
+            int checkcodeSeed = r.Next(10000,99999);
+            string checkCode = SRD.Helper.AES.Encrypt(checkcodeSeed.ToString());
+            SRD.Cache.CacheManager.SetRedisContent(Context.ConnectionId, checkCode);
+
+            Clients.Caller.setCheckCode(checkCode);
+
+            //更新其他用户的在线列表 -- 
             return base.OnConnected();
+        }
+        public void Login(string checkcode)
+        {
+ 
         }
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
             //更新其他用户的在线用户列表
             //string disuser = OnlineUser.Instance.GetCurrentUserID();
-            var disuser = this.SRDUser;
 
             return base.OnDisconnected(true);
         }

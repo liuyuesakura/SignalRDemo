@@ -3,6 +3,7 @@
 }
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
 <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+
 <style type="text/css" class="cp-pen-styles">
     *, *:before, *:after {
         box-sizing: border-box;
@@ -243,116 +244,25 @@
     <!-- 当前活动的聊天频道-->
     <div class="people-list" id="people-list">
         <div class="search">
-            <input type="text" placeholder="search" />
+            <input type="text" placeholder="查找活动聊天频道" />
             <i class="fa fa-search"></i>
         </div>
         <!--左侧头像组-->
-        <ul class="list">
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Vincent Porter</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
+        <ul class="list" id="leftbookmarks">
 
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Aiden Chavez</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> left 7 mins ago
-                    </div>
-                </div>
-            </li>
+            <left-bookmark 
+                           v-for="item in leftUserList"
+                           :headimg="item.headImg"
+                           :username="item.userName"
+                           :onlinestatus="item.onlineStatus">
+            </left-bookmark>
 
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Mike Thomas</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Erica Hughes</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_05.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Ginger Johnston</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Tracy Carpenter</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> left 30 mins ago
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_07.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Christian Kelly</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> left 10 hours ago
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_08.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Monica Ward</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_09.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Dean Henry</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> offline since Oct 28
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Peyton Mckinney</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
         </ul>
         <!--左侧头像组结束-->
     </div>
     <!--当前活动的聊天频道结束 -->
 
-    <div class="chat">
+    <div class="chat" id="chat-message">
         <!--聊天顶部头像-->
         <div class="chat-header clearfix">
             <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg" alt="avatar" />
@@ -367,57 +277,19 @@
         <!--聊天信息-->
         <div class="chat-history">
             <ul>
-                <li class="clearfix">
-                    <div class="message-data align-right">
-                        <span class="message-data-time">10:10 AM, Today</span> &nbsp; &nbsp;
-                        <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
+                <template v-for="msg in MessageList" v-if="(msg.to == chatWithNow && msg.fromMe) || (msg.toMe && msg.from == chatWithNow)" >
+                    <li :class="{clearfix:msg.fromMe}">
+                        <div :class="{'message-data':true,'align-right':msg.fromMe }">
+                            <span class="message-data-time">{{msg.timeStamp}}</span> &nbsp; &nbsp;
+                            <span class="message-data-name">{{msg.fromMe?msg.from:msg.to}}</span> <i class="fa fa-circle me"></i>
 
-                    </div>
-                    <div class="message other-message float-right">
-                        Hi Vincent, how are you? How is the project coming along?
-                    </div>
-                </li>
+                        </div>
+                        <div :class="{'message':true,'other-message':msg.fromMe,'float-right':msg.fromMe, 'my-message':msg.toMe}">
+                            {{msg.content}}
+                        </div>
+                    </li>
 
-                <li>
-                    <div class="message-data">
-                        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-                        <span class="message-data-time">10:12 AM, Today</span>
-                    </div>
-                    <div class="message my-message">
-                        Are we meeting today? Project has been already finished and I have results to show you.
-                    </div>
-                </li>
-
-                <li class="clearfix">
-                    <div class="message-data align-right">
-                        <span class="message-data-time">10:14 AM, Today</span> &nbsp; &nbsp;
-                        <span class="message-data-name">Olia</span> <i class="fa fa-circle me"></i>
-
-                    </div>
-                    <div class="message other-message float-right">
-                        Well I am not sure. The rest of the team is not here yet. Maybe in an hour or so? Have you faced any problems at the last phase of the project?
-                    </div>
-                </li>
-
-                <li>
-                    <div class="message-data">
-                        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-                        <span class="message-data-time">10:20 AM, Today</span>
-                    </div>
-                    <div class="message my-message">
-                        Actually everything was fine. I'm very excited to show this to our team.
-                    </div>
-                </li>
-
-                <li>
-                    <div class="message-data">
-                        <span class="message-data-name"><i class="fa fa-circle online"></i> Vincent</span>
-                        <span class="message-data-time">10:31 AM, Today</span>
-                    </div>
-                    <i class="fa fa-circle online"></i>
-                    <i class="fa fa-circle online" style="color: #AED2A6"></i>
-                    <i class="fa fa-circle online" style="color:#DAE9DA"></i>
-                </li>
+                </template>
 
             </ul>
 
@@ -440,7 +312,7 @@
             <input type="text" placeholder="search" />
             <i class="fa fa-search"></i>
         </div>
-        <!--左侧头像组-->
+        <!--右侧头像组-->
         <ul class="list">
             <li class="clearfix">
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />
@@ -546,7 +418,7 @@
     </div>
     <!-- 在线用户结束-->
 </div> <!-- end container -->
-@*<div>
+<div>
     <div>名称:<p id="username"></p></div>
     输入房间名:
     <input type="text" value="asdasd" id="Roomname" />
@@ -557,7 +429,7 @@
     <ul id="roomlist"></ul>
 </div>
 <div id="RoomList">
-</div>*@
+</div>
 @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700" />*@
 
 <script src="/signalr/hubs"></script>
@@ -609,6 +481,9 @@
         // 获取用户名称。
         $('#username').html(prompt('请输入您的名称:', ''));
 
+        chat.client.setClientID = function (clientID) {
+            $clientID = clientID;
+        }
         $.connection.hub.start().done(function () {
             $('#CreatRoom').click(function () {
                 if (roomcount < 2) {
@@ -641,3 +516,70 @@
     }
 
 </script>
+<!--注册vue组件-->
+<script>
+    Vue.component('left-bookmark', {
+        // 声明 props
+        props: ['headimg', 'username', 'onlinestatus'],
+        // 就像 data 一样，prop 可以用在模板内
+        // 同样也可以在 vm 实例中像 “this.message” 这样使用
+        template: '<li class="clearfix">\
+                <img :src="headimg" alt="avatar" />\
+                <div class="about">\
+                    <div class="name">{{username}}</div>\
+                    <div class="status">\
+                        <i class="fa fa-circle online"></i>{{onlinestatus}}\
+                    </div></div></li>'
+    })
+    // 创建根实例 -- 左侧聊天窗口
+    var leftBookMarks = new Vue({
+        el: '#leftbookmarks',
+        data: {
+            leftUserList: [
+                {
+                    headImg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg',
+                    userName: 'Vincent Porter',
+                    onlineStatus: 'Chat With Me!'
+                }
+            ]
+        }
+    });
+    Vue.component('chat-message', {
+        props:['fromMe','from','toMe','to','content','timeStamp'],
+        template: '<li :class="{clearfix:fromMe}">\
+                        <div :class="{\'message-data\':true,\'align-right\':fromMe }">\
+                            <span class="message-data-time">{{timeStamp}}</span> &nbsp; &nbsp;\
+                            <span class="message-data-name">{{fromMe?from:to}}</span> <i class="fa fa-circle me"></i></div>\
+                        <div :class="{\'message\':true,\'other-message\':fromMe,\'float-right\':fromMe, \'my-message\':toMe}">{{content}}</div></li>'
+    });
+    // 聊天内容显示区域
+    var chatArea = new Vue({
+        el: '#chat-message',
+        data: {
+            chatWithNow: 'lalala',
+            MessageList: [
+                {
+                    timeStamp: '11:11:11 PM Today',
+                    from: '666666',
+                    fromMe: true,
+                    to: 'lalala',
+                    toMe: false,
+                    content: 'Are we meeting today?',
+                },
+                {
+                    timeStamp: '10:12 AM, Today',
+                    from: 'lalala',
+                    fromMe: false,
+                    to: '666666',
+                    toMe: true,
+                    content: ' Project has been already finished and I have results to show you.'
+                }
+            ]
+        },
+        computed: {
+        },
+        methods: {
+        }
+    });
+</script>
+
