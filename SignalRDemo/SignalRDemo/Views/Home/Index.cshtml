@@ -313,106 +313,14 @@
             <i class="fa fa-search"></i>
         </div>
         <!--右侧头像组-->
-        <ul class="list">
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Vincent Porter</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
+        <ul class="list" id="rightfriendmarks">
 
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Aiden Chavez</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> left 7 mins ago
-                    </div>
-                </div>
-            </li>
+            <right-friendmark v-for="item in rightFriendList"
+                              :headimg="item.headImg"
+                              :username="item.userName"
+                              :onlinestatus="item.onlineStatus">
+            </right-friendmark>
 
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Mike Thomas</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Erica Hughes</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_05.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Ginger Johnston</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_06.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Tracy Carpenter</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> left 30 mins ago
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_07.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Christian Kelly</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> left 10 hours ago
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_08.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Monica Ward</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_09.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Dean Henry</div>
-                    <div class="status">
-                        <i class="fa fa-circle offline"></i> offline since Oct 28
-                    </div>
-                </div>
-            </li>
-
-            <li class="clearfix">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_10.jpg" alt="avatar" />
-                <div class="about">
-                    <div class="name">Peyton Mckinney</div>
-                    <div class="status">
-                        <i class="fa fa-circle online"></i> online
-                    </div>
-                </div>
-            </li>
         </ul>
         <!--左侧头像组结束-->
     </div>
@@ -434,8 +342,7 @@
 
 <script src="/signalr/hubs"></script>
 <script type="text/javascript">
-    var chat
-    var roomcount = 0;
+    var chat;
     $(function () {
         chat = $.connection.ChatHub;
         chat.client.showMessage = function (Message) {
@@ -447,6 +354,9 @@
                 $(this).append('<li>' + message + '</li>')
             })
         }
+        $('#CreatRoom').on('click', function () {
+            chat.server.createChat($('#Roomname').val(), '123456');
+        });
         //向指定用户发送消息并创建会话
         chat.client.createChat = function(touser,message){
 
@@ -470,29 +380,53 @@
         //注册查询房间列表的方法
         chat.client.getRoomlist = function (data) {
             if (data) {
-                var jsondata = $.parseJSON(data);
-                $("#roomlist").html(" ");
-                for (var i = 0; i < jsondata.length; i++) {
-                    var html = ' <li>房间名:' + jsondata[i].RoomName + '<button roomname="' + jsondata[i].RoomName + '" onclick="AddRoom(this)">加入</button></li>';
-                    $("#roomlist").append(html);
+                var roomlist = $.parseJSON(data);
+                if (roomlist == null || roomlist.length <= 0)
+                    return;
+                $.each(roomlist, function (i, item) {
+                    if (leftList.indexOf(item) <= 0) {
+                        //把获取到的数据装载到左侧房间列表中
+                        leftBookMarks.leftUserList.push(item);
+                    }
+
+                });
+            }
+        }
+        chat.client.getFriendList = function (data) {
+            if (data) {
+                var friendlist = $.parseJSON(data);
+                if (friendlist == null || friendlist.length <= 0)
+                {
+                    return;
                 }
+                $.each(friendlist, function (i, item) {
+                    if (rightList.indexOf(item) < 0) {
+                        //把获取到的数据装载到右侧好友列表中
+                        rightList.push(item);
+                    }
+                });
             }
         }
         // 获取用户名称。
         $('#username').html(prompt('请输入您的名称:', ''));
-
-        chat.client.setClientID = function (clientID) {
-            $clientID = clientID;
+        //加入聊天室，装载checkcode，用于登录比对
+        chat.client.setCheckCode = function (checkcode) {
+            localStorage.setItem('checkcode',checkcode);
         }
         $.connection.hub.start().done(function () {
-            $('#CreatRoom').click(function () {
-                if (roomcount < 2) {
-                    chat.server.createChat($("#Roomname").val());
-                    roomcount++;
+            var ud =
+            setInterval(function () {
+                var cc = localStorage.getItem('checkcode');
+                var led = localStorage.getItem('led');
+                if (cc != undefined && led != undefined && led == 1) {
+                    chat.server.login(localStorage.getItem('checkcode'), '第二个用户');
+                    localStorage.setItem('led', 0);
+                    clearInterval(ud);
                 } else {
-                    alert("聊天窗口只允许有2个")
+                    localStorage.setItem('led', 1);
                 }
-            })
+            },300);
+
         });
 
     });
@@ -539,7 +473,9 @@
                 {
                     headImg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg',
                     userName: 'Vincent Porter',
-                    onlineStatus: 'Chat With Me!'
+                    onlineStatus: 'Chat With Me!',
+                    isGroup: false,
+                    groupId: '1234567878990',
                 }
             ]
         }
@@ -581,5 +517,43 @@
         methods: {
         }
     });
+    Vue.component('right-friendmark', {
+        // 声明 props
+        props: ['headimg', 'username', 'onlinestatus'],
+        // 就像 data 一样，prop 可以用在模板内
+        // 同样也可以在 vm 实例中像 “this.message” 这样使用
+        template: '<li class="clearfix">\
+                <img :src="headimg" alt="avatar" />\
+                <div class="about">\
+                    <div class="name">{{username}}</div>\
+                    <div class="status">\
+                        <i class="fa fa-circle online"></i>{{onlinestatus}}\
+                    </div></div></li>'
+    })
+    // 创建根实例 -- 右侧好友列表
+    var rightFriendMarks = new Vue({
+        el: '#rightfriendmarks',
+        data: {
+            rightFriendList: [
+                {
+                    headImg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg',
+                    userName: 'Vincent Porter',
+                    onlineStatus: 'Chat With Me!',
+                    isGroup: false,
+                    groupId: '1234567878990',
+                },
+                {
+                    headImg: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_02.jpg',
+                    userName: 'Vincent Porter_2',
+                    onlineStatus: 'Chat With Me!_2',
+                    isGroup: false,
+                    groupId: '1234567878990',
+                }
+            ]
+        }
+    });
+    var leftList = leftBookMarks.leftUserList;
+    var rightList = rightFriendMarks.rightFriendList;
+    var messageList = chatArea.MessageList;
 </script>
 

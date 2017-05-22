@@ -5,7 +5,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 namespace SignalRDemo.Hubs
 {
     [HubName("ChatHub")]
@@ -25,7 +25,6 @@ namespace SignalRDemo.Hubs
 
             string roomid = string.Empty;
             //写入数据库
-
             MsgInstance.CreateChat(userid, out roomid);
 
             Groups.Add(Context.ConnectionId,roomid);
@@ -40,6 +39,15 @@ namespace SignalRDemo.Hubs
                 }
             };
             SRD.Cache.CacheManager.SetRedisContent<RoomCacheModel>(roomid,cache);
+            List<Models.VueModel.LeftUserModel> leftUserList = new List<Models.VueModel.LeftUserModel>();
+            leftUserList.Add(new Models.VueModel.LeftUserModel() { 
+                 groupId = "groupid",
+                 headImg = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg",
+                  isGroup = false,
+                   onlineStatus = "I`m online!",
+                    userName = "It`s a username"
+            });
+            Clients.Caller.setRoomList(Newtonsoft.Json.JsonConvert.SerializeObject(leftUserList));
             Clients.Group(roomid, new string[0]).sendMessage("创建房间成功~房间号为" + roomid);
             //异步去拉取一个客服进入聊天
         }
@@ -59,7 +67,7 @@ namespace SignalRDemo.Hubs
             //调用此连接用户的本地JS(显示房间)
             //Clients.Client(Context.ConnectionId).addRoom(roomid);
 
-            string creator = OnlineUser.Instance.GetCurrentUserID();
+            string creator = "0079"; //OnlineUser.Instance.GetCurrentUserID();
 
             RoomCacheModel cache = new RoomCacheModel()
             {
@@ -70,7 +78,9 @@ namespace SignalRDemo.Hubs
                 }
             };
             SRD.Cache.CacheManager.SetRedisContent<RoomCacheModel>(roomid, cache);
-            Clients.Group(roomid, new string[1]{creator}).sendMessage(message);
+
+            GetRoomList(userid);
+            Clients.Group(roomid, new string[0]).sendMessage(message);
         }
         public void JoinChat(string userid,string roomid)
         {
@@ -122,16 +132,28 @@ namespace SignalRDemo.Hubs
             Random r = new Random();
             int checkcodeSeed = r.Next(10000,99999);
             string checkCode = SRD.Helper.AES.Encrypt(checkcodeSeed.ToString());
-            SRD.Cache.CacheManager.SetRedisContent(Context.ConnectionId, checkCode);
+            UserCacheModel userCM = new UserCacheModel()
+            {
+                CheckCode = checkCode,
+                ConnectionId = Context.ConnectionId,
+            };
+            SRD.Cache.CacheManager.SetRedisContent(Context.ConnectionId, userCM);
 
             Clients.Caller.setCheckCode(checkCode);
 
             //更新其他用户的在线列表 -- 
             return base.OnConnected();
         }
-        public void Login(string checkcode)
+        public void Login(string checkcode,string userid)
         {
- 
+            string connectionid = Context.ConnectionId;
+            UserCacheModel userCM = SRD.Cache.CacheManager.GetRedisContent<UserCacheModel>(connectionid);
+            userCM.HeadImg = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg";
+            userCM.UserId = userid;
+            userCM.UserKind = 0;
+            userCM.UserName = userid;
+            SRD.Cache.CacheManager.SetRedisContent(connectionid,userCM);
+            GetFriendList(userid,connectionid);
         }
         public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
         {
@@ -139,6 +161,37 @@ namespace SignalRDemo.Hubs
             //string disuser = OnlineUser.Instance.GetCurrentUserID();
 
             return base.OnDisconnected(true);
+        }
+
+        /// <summary>
+        /// 聊天房间列表
+        /// </summary>
+        public void GetRoomList(string userid)
+        {
+            List<Models.VueModel.LeftUserModel> leftUserList = new List<Models.VueModel.LeftUserModel>();
+            leftUserList.Add(new Models.VueModel.LeftUserModel()
+            {
+                groupId = "groupid",
+                headImg = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_03.jpg",
+                isGroup = false,
+                onlineStatus = "I`m online!",
+                userName = userid
+            });
+            Clients.Caller.getRoomList(Newtonsoft.Json.JsonConvert.SerializeObject(leftUserList));
+        }
+        public void GetFriendList(string friendid,string connectionid)
+        {
+            List<Models.VueModel.RightFriendModel> rightFriendList = new List<Models.VueModel.RightFriendModel>();
+            rightFriendList.Add(new Models.VueModel.RightFriendModel() 
+            {
+                connectionId = connectionid,
+                headImg = "https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_04.jpg",
+                 isOnline = true,
+                  onlineStatus = "I`m OnLINE!",
+                   userId = friendid,
+                   userName = friendid
+            });
+            Clients.AllExcept(new string[1]{connectionid}).getFriendList(Newtonsoft.Json.JsonConvert.SerializeObject(rightFriendList));
         }
     }
 }

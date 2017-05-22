@@ -188,8 +188,12 @@
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\RoomCacheModel.cs" />
+    <Compile Include="Hubs\UserCacheModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\VueModel\LeftUserModel.cs" />
+    <Compile Include="Models\VueModel\MessageModel.cs" />
+    <Compile Include="Models\VueModel\RightFriendModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -245,6 +249,7 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Scripts\Lib\array.extention.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

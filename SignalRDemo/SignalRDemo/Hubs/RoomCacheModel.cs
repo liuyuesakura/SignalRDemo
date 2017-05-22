@@ -5,6 +5,9 @@ using System.Web;
 
 namespace SignalRDemo.Hubs
 {
+    /// <summary>
+    /// 当前聊天室缓存Model
+    /// </summary>
     public class RoomCacheModel
     {
         /// <summary>
