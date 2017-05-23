@@ -72,3 +72,4 @@ F:\SignalRDemo\SignalRDemo\SignalRDemo\SignalRDemo\bin\zh-Hans\Microsoft.Owin.Se
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SignalRDemo\obj\Debug\SignalRDemo.csprojResolveAssemblyReference.cache
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SignalRDemo\obj\Debug\SignalRDemo.dll
 F:\SignalRDemo\SignalRDemo\SignalRDemo\SignalRDemo\obj\Debug\SignalRDemo.pdb
+E:\SignalRDemo\SignalRDemo\SignalRDemo\bin\Microsoft.Owin.Security.Twitter.dll

@@ -9,6 +9,8 @@ namespace SignalRDemo
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            var hubConfiguration = new Microsoft.AspNet.SignalR.HubConfiguration();
+            hubConfiguration.EnableDetailedErrors = true;
             app.MapSignalR();
         }
     }

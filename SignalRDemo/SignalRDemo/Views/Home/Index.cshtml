@@ -277,7 +277,7 @@
         <!--聊天信息-->
         <div class="chat-history">
             <ul>
-                <template v-for="msg in MessageList" v-if="(msg.to == chatWithNow && msg.fromMe) || (msg.toMe && msg.from == chatWithNow)" >
+                <template v-for="msg in MessageList" v-if="(msg.to == chatWithNow && msg.fromMe) || (msg.toMe && msg.from == chatWithNow) || true" >
                     <li :class="{clearfix:msg.fromMe}">
                         <div :class="{'message-data':true,'align-right':msg.fromMe }">
                             <span class="message-data-time">{{msg.timeStamp}}</span> &nbsp; &nbsp;
@@ -301,7 +301,7 @@
             <i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;
             <i class="fa fa-file-image-o"></i>
 
-            <button>Send</button>
+            <input type="button" id="sendbtn" value="Send" />
 
         </div> <!-- end chat-message -->
 
@@ -326,7 +326,7 @@
     </div>
     <!-- 在线用户结束-->
 </div> <!-- end container -->
-<div>
+@*<div>
     <div>名称:<p id="username"></p></div>
     输入房间名:
     <input type="text" value="asdasd" id="Roomname" />
@@ -337,9 +337,8 @@
     <ul id="roomlist"></ul>
 </div>
 <div id="RoomList">
-</div>
+</div>*@
 @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700" />*@
-
 <script src="/signalr/hubs"></script>
 <script type="text/javascript">
     var chat;
@@ -349,10 +348,27 @@
 
             alert(Message);
         }
-        chat.client.sendMessage = function (roomname, message) {
-            $("#" + roomname).find("ul").each(function () {
-                $(this).append('<li>' + message + '</li>')
-            })
+        chat.client.sendMessage = function (data) {
+            //$("#" + roomname).find("ul").each(function () {
+            //    $(this).append('<li>' + message + '</li>')
+            //})
+
+            if (data) {
+                var msglist = $.parseJSON(data);
+                if (msglist == null || msglist.length <= 0)
+                    return;
+                if (msglist.length == undefined) {
+                    messageList.push(msglist);
+                }
+                else {
+                    $.each(msglist, function (i, item) {
+                        if (messageList.indexOf(item) <= 0) {
+                            //把获取到的数据装载到左侧房间列表中
+                            messageList.push(item);
+                        }
+                    });
+                }
+            }
         }
         $('#CreatRoom').on('click', function () {
             chat.server.createChat($('#Roomname').val(), '123456');
@@ -556,4 +572,24 @@
     var rightList = rightFriendMarks.rightFriendList;
     var messageList = chatArea.MessageList;
 </script>
+<!--发送消息-->
+<script type="text/javascript">
+    $('#sendbtn').on('click', function () {
+        var msg = $('#message-to-send').val();
+        if (msg == '' || msg == undefined) {
+            alert('请先输入要发送的信息');
+            return;
+        }
 
+        chat.server.sendMessage('chatwithnow', msg);
+        var msg = {
+            timeStamp: '11:11:11 PM Today',
+            from: '666666',
+            fromMe: true,
+            to: 'lalala',
+            toMe: false,
+            content: msg,
+        };
+        messageList.push(msg);
+    });
+</script>

@@ -109,17 +109,28 @@ namespace SignalRDemo.Hubs
             //写入数据库
             MsgInstance.JoinChat(userid,roomid);
         }
-        public void SendMessage(string room, string userid, string message)
+        public void SendMessage(string room, string message)
         {
+            UserCacheModel userCM = SRD.Cache.CacheManager.GetRedisContent<UserCacheModel>(Context.ConnectionId);
             MsgInstance.Insert(new SRD.Model.Message()
             {
                 Content = message,
-                FromUser = userid,
+                FromUser = userCM.UserName,
                 MessageGroupId = room,
                 MessageKind = (int)SRD.Model.Message.MessageKindEnum.Common,
                 MessageType = (int)SRD.Model.Message.MessageTypeEnum.Text
             });
-            Clients.Group(room, new string[0]).sendMessage(message + " " + DateTime.Now.ToShortTimeString());
+            Models.VueModel.MessageModel msg = new Models.VueModel.MessageModel()
+            {
+                content = message,
+                from = userCM.UserName,
+                fromMe = false,
+                to = room,
+                toMe = true,
+                timeStamp = DateTime.Now.ToShortTimeString()
+            };
+            //Clients.Group(room, new string[1]{userCM.ConnectionId}).sendMessage(JsonConvert.SerializeObject(msg));
+            Clients.AllExcept(new string[1]{Context.ConnectionId}).sendMessage(JsonConvert.SerializeObject(msg));
         }
         /// <summary>
         /// 用户上线
