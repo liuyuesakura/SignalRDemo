@@ -326,18 +326,6 @@
     </div>
     <!-- 在线用户结束-->
 </div> <!-- end container -->
-@*<div>
-    <div>名称:<p id="username"></p></div>
-    输入房间名:
-    <input type="text" value="asdasd" id="Roomname" />
-    <button id="CreatRoom">创建聊天室</button>
-</div>
-<div style="float:left;border:double">
-    <div>房间列表</div>
-    <ul id="roomlist"></ul>
-</div>
-<div id="RoomList">
-</div>*@
 @*<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700" />*@
 <script src="/signalr/hubs"></script>
 <script type="text/javascript">
@@ -370,9 +358,6 @@
                 }
             }
         }
-        $('#CreatRoom').on('click', function () {
-            chat.server.createChat($('#Roomname').val(), '123456');
-        });
         //向指定用户发送消息并创建会话
         chat.client.createChat = function(touser,message){
 
@@ -383,15 +368,6 @@
         }
         chat.client.removeRoom = function (data) {
             alert(data);
-        }
-        chat.client.addRoom = function (roomname) {
-            var html = '<div style="float:left; margin-left:30px; border:double" id="' + roomname + '" roomname="' + roomname + '"><button onclick="RemoveRoom(this)">退出</button>\
-                                    ' + roomname + '房间\
-                                                聊天记录如下:<ul>\
-                                                </ul>\
-                                    <input type="text" /> <button onclick="SendMessage(this)">发送</button>\
-                                    </div>'
-            $("#RoomList").append(html);
         }
         //注册查询房间列表的方法
         chat.client.getRoomlist = function (data) {
@@ -408,6 +384,7 @@
                 });
             }
         }
+
         chat.client.getFriendList = function (data) {
             if (data) {
                 var friendlist = $.parseJSON(data);
@@ -423,8 +400,7 @@
                 });
             }
         }
-        // 获取用户名称。
-        $('#username').html(prompt('请输入您的名称:', ''));
+
         //加入聊天室，装载checkcode，用于登录比对
         chat.client.setCheckCode = function (checkcode) {
             localStorage.setItem('checkcode',checkcode);
@@ -446,24 +422,6 @@
         });
 
     });
-    function SendMessage(btn) {
-        var message = $(btn).prev().val();
-        var room = $(btn).parent();
-        var username = $("#username").html();
-        message = username + ":" + message;
-        var roomname = $(room).attr("roomname");
-        chat.server.sendMessage(roomname, message);
-
-    }
-    function RemoveRoom(btn) {
-        var room = $(btn).parent();
-        var roomname = $(room).attr("roomname");
-        chat.server.removeFromRoom(roomname);
-    }
-    function AddRoom(roomname) {
-        var data = $(roomname).attr("roomname");
-        chat.server.addToRoom(data);
-    }
 
 </script>
 <!--注册vue组件-->

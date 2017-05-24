@@ -39,6 +39,15 @@ namespace SRD.MongoBLL
             var result = Insert(user);
             return GetItem(str,pwd);
         }
+
+        public Model.User IsUserAndGet(string str, string pwd)
+        {
+            if (!IsUser(str, pwd))
+            {
+                return null;
+            } 
+            return GetItem(str, pwd);
+        }
         public bool IsUser_ByEmail(string email,string pwd)
         {
             //return CacheHelper<bool>.Get("IsConsumer" + consumer.ConsumerKey, TimeSpan.FromHours(1), () =>

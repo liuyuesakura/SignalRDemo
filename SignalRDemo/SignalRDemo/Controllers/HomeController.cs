@@ -10,6 +10,15 @@ namespace SignalRDemo.Controllers
     {
         public ActionResult Index()
         {
+            //检查是否有登录，没有登录的话去登录页
+            if (string.IsNullOrWhiteSpace(OnlineUser.Instance.GetCurrentUserID()) )
+            {
+                return RedirectToAction("Login");
+            }
+            return View();
+        }
+        public ActionResult Login()
+        {
             return View();
         }
         public JsonResult Reg()
