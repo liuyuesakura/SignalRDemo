@@ -19,6 +19,8 @@ namespace SignalRDemo.Controllers
         }
         public ActionResult Login()
         {
+
+
             return View();
         }
         public JsonResult Reg()

@@ -13,22 +13,22 @@ namespace SignalRDemo.Areas.Ajax.Controllers
         {
             return Json(new { Code= 0,Message = "Test Success"},JsonRequestBehavior.AllowGet);
         }
-        [HttpPost]
-        public JsonResult Login(string userid,string pwd)
-        {
+        //[HttpPost]
+        //public JsonResult Login(string userid,string pwd)
+        //{
 
-            SRD.MongoBLL.User srduser = new SRD.MongoBLL.User();
-            SRD.Model.User user = srduser.IsUserOrCreate(userid,pwd);
-            bool result = user != null;
-            if(result)
-                OnlineUser.Instance.Login(user);
-            return Json(new { 
-                Code = result?0:1,
-                Msg = result?"登录成功":"登录失败",
-                UserId = result?user.UserId:string.Empty,
-                NickName = result?user.NickName:string.Empty
-            });
-        }
+        //    SRD.MongoBLL.User srduser = new SRD.MongoBLL.User();
+        //    SRD.Model.User user = srduser.IsUserOrCreate(userid,pwd);
+        //    bool result = user != null;
+        //    if(result)
+        //        OnlineUser.Instance.Login(user);
+        //    return Json(new { 
+        //        Code = result?0:1,
+        //        Msg = result?"登录成功":"登录失败",
+        //        UserId = result?user.UserId:string.Empty,
+        //        NickName = result?user.NickName:string.Empty
+        //    });
+        //}
         [HttpPost]
         public JsonResult Login(string userid, string pwd, string checkcode)
         {
