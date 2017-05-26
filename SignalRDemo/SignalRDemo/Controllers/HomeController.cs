@@ -19,7 +19,9 @@ namespace SignalRDemo.Controllers
         }
         public ActionResult Login()
         {
-
+            var code = this.HttpContext.Session["logincheckcode"];
+            if(code == null)
+                this.HttpContext.Session["logincheckcode"] = SRD.Helper.Verify.CheckCode.Instance.CreateCheckCode();
 
             return View();
         }

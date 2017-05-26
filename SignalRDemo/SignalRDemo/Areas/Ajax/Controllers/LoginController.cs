@@ -52,5 +52,20 @@ namespace SignalRDemo.Areas.Ajax.Controllers
                 Msg = "登录成功"
             });
         }
+
+        public void LoadCheckCodeImg(int type, int width = 200, int height = 60,int size = 15)
+        {
+            //处理验证码
+            var code = this.HttpContext.Session["logincheckcode"];
+            if (code == null)
+            {
+                // 去生成一个随机串，写入到session中
+                string checkcode = SRD.Helper.Verify.CheckCode.Instance.CreateCheckCode();
+                this.HttpContext.Session["logincheckcode"] = checkcode;
+            }
+            byte[] bs = SRD.Helper.ImageHelper.Instance.CreateVerifyImage(code.ToString(), width, height, size);
+            this.HttpContext.Response.ContentType = "image/Jpge";
+            this.HttpContext.Response.BinaryWrite(bs);
+        }
     }
 }
