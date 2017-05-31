@@ -299,6 +299,17 @@ body .login_fields__submit input:hover {
                 ctx.arc(e.offsetX, e.offsetY, 4, 0, Math.PI * 2, true);
                 ctx.fillStyle = 'lightblue';
                 ctx.fill();
+                //记录到localstage中
+                var cccr = localStorage.getItem('ccck');
+                if (cccr != null && cccr.push) {
+                    cccr.push({ x: e.offsetX, y: e.offsetY });
+                } else {
+                    cccr = Array();
+                    cccr.push({ x: e.offsetX, y: e.offsetY });
+                }
+                if (cccr.length >= 2) {
+                    //POST到后台验证
+                }
             });
         }
     </script>
