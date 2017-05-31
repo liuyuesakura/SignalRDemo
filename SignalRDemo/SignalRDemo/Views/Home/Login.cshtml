@@ -32,9 +32,14 @@
                 <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
             </div>
         </div>
-        <div class='login_fields__checkcode'>
+        @*<div class='login_fields__checkcode'>
+
             <img src='/ajax/login/LoadCheckCodeImg?type=0&width=320&height=41&size=15'>
-        </div>
+        </div>*@
+        <canvas class='login_fields__checkcode' id="checkcode_canvas">
+           
+        </canvas>
+        @*<img id="checkcodeimg" src='/ajax/login/LoadCheckCodeImg?type=0&width=320&height=41&size=15' style="display:none">*@
         <div class='login_fields__submit'>
             <input type='submit' value='Log In'>
             <div class='forgot'>
@@ -230,6 +235,10 @@ body .login_fields input[type='text'], body .login_fields input[type='password']
 body .login_fields__user, body .login_fields__password, body .login_fields__checkcode {
   position: relative;
 }
+    /*body .login_fields__checkcode {
+        width:320px;
+        height:42px;
+    }*/
 body .login_fields__submit {
   position: relative;
   top: 35px;
@@ -274,7 +283,25 @@ body .login_fields__submit input:hover {
           transition-duration: .2s;
 }
 </style>
-
+<script type="text/javascript">
+    var c = document.getElementById('checkcode_canvas');
+        var ctx = c.getContext('2d');
+        var img = new Image();//document.getElementById(checkcodeimg);
+        img.src = '/ajax/login/LoadCheckCodeImg?type=0&width=320&height=41&size=15';
+        img.onload = function () {
+            c.width = img.width;
+            c.height = img.height;
+            ctx.drawImage(img, 0, 0, img.width, img.height);
+            c.addEventListener('click', function (e) {
+                console.log(e.clientX);
+                console.log(e.clientY);
+                ctx.beginPath();
+                ctx.arc(e.offsetX, e.offsetY, 4, 0, Math.PI * 2, true);
+                ctx.fillStyle = 'lightblue';
+                ctx.fill();
+            });
+        }
+    </script>
 <script type="text/javascript">
     $('input[type="submit"]').click(function () {
         var userid = $('input[name="username"]').val();

@@ -27,7 +27,9 @@ namespace SRD.Helper
                                         FontStyle.Strikeout,
                                         FontStyle.Underline
                                     };
+            FontFamily[] ff = FontFamily.Families;
             int fontCount = fonts.Length;
+            var thef = new Font("STXINWEI", fontSize, FontStyle.Regular);
             Bitmap bmp = new Bitmap(width, height);
 
             Graphics graphics = Graphics.FromImage(bmp);
@@ -52,37 +54,26 @@ namespace SRD.Helper
 
                 for (int i = 0; i < chars.Length; i++)
                 {
-                    using (Bitmap singleChar = new Bitmap(spaceWith,height))
-                    {
-                        singleChar.MakeTransparent(Color.Transparent);
 
-                        int colorIndex = random.Next(0, colorCount);
-                        int fontIndex = random.Next(0, fontCount);
-                        FontStyle fs = fontStyle[random.Next(0, fontStyle.Length)];
-                        Font f = new Font(fonts[fontIndex], fontSize, fs); //字体样式
-                        Brush b = new SolidBrush(colors[colorIndex]);
+                    int colorIndex = random.Next(0, colorCount);
+                    int fontIndex = random.Next(0, fontCount);
+                    FontStyle fs = fontStyle[random.Next(0, fontStyle.Length)];
+                    Font f = thef;//new Font(fonts[fontIndex], fontSize, fs); //字体样式
+                    Brush b = new SolidBrush(colors[colorIndex]);
 
-                        float angle = random.Next(-5, 5);
-                        using (Graphics singleGrap = Graphics.FromImage(singleChar))
-                        {
-                            Point dot = new Point();
-                            //int py = random.Next(-2, 2);
-                            dot.Y = 1;// (height - f.Height) / 2 - 2;// +py;//angle > 0 ? height - 1 : 0
-                            dot.X = 0;//i * fontSize + (i + 1) * spaceWith;
-                            //singleGrap.TranslateTransform(width,height);
-                            singleGrap.RotateTransform(angle);
+                    Point dot = new Point();
+                    //int py = random.Next(-2, 2);
+                    dot.Y = 4;// (height - f.Height) / 2 - 2;// +py;//angle > 0 ? height - 1 : 0
+                    dot.X = i * fontSize + (i + 1) * spaceWith;//i * fontSize + (i + 1) * spaceWith;
+                    //singleGrap.TranslateTransform(width,height);
 
-                            singleGrap.DrawString(chars[i].ToString(), f, b, dot);
-                            //singleGrap.TranslateTransform(-width, -height);
-                            singleGrap.RotateTransform(angle);
+                    //绘制到主图片上
 
-                            //绘制到主图片上
-                            if(angle < 0)
-                                singleChar.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                            graphics.DrawImage(singleChar, new Point(i * fontSize + (i + 1) * spaceWith, 0));
-
-                        }
-                    }
+                    float angle = random.Next(-5, 5);
+                    if (angle < 0)
+                        bmp.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    //graphics.DrawImage(singleChar, new Point(i * fontSize + (i + 1) * spaceWith, 0));
+                    graphics.DrawString(chars[i].ToString(), f, b, dot);
                 }
 
                bmp.Save(stram, ImageFormat.Png);
