@@ -67,5 +67,22 @@ namespace SignalRDemo.Areas.Ajax.Controllers
             this.HttpContext.Response.ContentType = "image/Jpge";
             this.HttpContext.Response.BinaryWrite(bs);
         }
+
+        /// <summary>
+        /// 根据传回来的xy坐标判断有没有点中颠倒的汉字，每次点击都提交一次，但只在验证通过或点击次数达到上限时返回数据
+        /// </summary>
+        /// <param name="pointx"></param>
+        /// <param name="pointy"></param>
+        [HttpPost]
+        public JsonResult VerifyCheckCode(int pointx, int pointy)
+        {
+            //从session中获取验证码编号
+            //从缓存中获取验证码图片点阵
+            //判断传回的坐标是否命中
+            return Json(new { 
+                Code = 0,
+                Msg = ""
+            });
+        }
     }
 }

@@ -15,8 +15,6 @@ namespace SRD.Helper
         public byte[] CreateVerifyImage(string code, int width, int height, int fontSize)
         {
             MemoryStream stram = new MemoryStream();
-            Bitmap greatBmp = new Bitmap(width * 8, height * 8);
-            Graphics greatGrap = Graphics.FromImage(greatBmp);
             Color[] colors = { Color.Black, Color.Red, Color.Blue, Color.Green, Color.Orange, Color.Brown, Color.DarkBlue };
             int colorCount = colors.Length;
             string[] fonts = { "Times New Roman", "MS Mincho", "Book Antiqua", "Gungsuh", "PMingLiU", "Impact" };
@@ -38,12 +36,12 @@ namespace SRD.Helper
             try
             {
                 //随机噪点
-                for (int i = 0; i < 100; i++)
-                {
-                    int x = random.Next(0, bmp.Width);
-                    int y = random.Next(0, bmp.Height);
-                    bmp.SetPixel(x, y, colors[random.Next(0, colorCount)]);
-                }
+                //for (int i = 0; i < 100; i++)
+                //{
+                //    int x = random.Next(0, bmp.Width);
+                //    int y = random.Next(0, bmp.Height);
+                //    bmp.SetPixel(x, y, colors[random.Next(0, colorCount)]);
+                //}
                 char[] chars = code.ToArray();
                 //文字居中
                 StringFormat format = new StringFormat(StringFormatFlags.NoClip);
@@ -76,8 +74,9 @@ namespace SRD.Helper
                     graphics.DrawString(chars[i].ToString(), f, b, dot);
                 }
 
-               bmp.Save(stram, ImageFormat.Png);
+                bmp.Save(stram, ImageFormat.Png);
                 byte[] result = stram.ToArray();
+                bool[,] lattice = GetLatticeFromBitmap(bmp);
                 stram.Close();
                 bmp.Dispose();
                 return result;
@@ -88,6 +87,127 @@ namespace SRD.Helper
                 graphics.Dispose();
             }
 
+        }
+        /// <summary>
+        /// 获取点阵
+        /// </summary>
+        /// <param name="bmp"></param>
+        /// <returns></returns>
+        public bool[,] GetLatticeFromBitmap(Bitmap bmp)
+        {
+            bool[,] result = new bool[bmp.Width, bmp.Height];
+            for (int i = 0; i < bmp.Width; i++)
+            {
+                for (int j = 0; j < bmp.Height; j++)
+                {
+
+                    Color color = bmp.GetPixel(i, j);
+                    result[i, j] = color.Name != "ffffffff";
+                }
+            }
+            return result;
+        }
+        /// <summary>
+        /// 判断是否有覆盖到点阵上
+        /// </summary>
+        /// <param name="lattice">点阵</param>
+        /// <param name="point">点击位置</param>
+        /// <param name="coverkind">覆盖类型，采用何种方式判断</param>
+        /// <param name="range">圆形覆盖则为半径，正方形覆盖为边长</param>
+        /// <returns></returns>
+        public bool IsCover(bool[,] lattice,Point point,int coverkind,int range)
+        {
+            IsCoverCheck check = IsCoverCheck_Base.GetCheck(coverkind);
+
+            return check.Check(lattice,point,range);
+        }
+        interface IsCoverCheck
+        {
+            bool Check(bool[,] lattice, Point point, int range);
+        }
+        public class IsCoverCheck_Base : IsCoverCheck
+        {
+            public bool Check(bool[,] lattice, Point point, int range)
+            {
+                return true;
+            }
+            public static IsCoverCheck_Base GetCheck(int coverkind)
+            {
+                switch (coverkind)
+                {
+                    case (int)CoverKind.Circle:
+                return new IsCoverCheck_Circle();
+                    case (int) CoverKind.Square:
+                return new IsCoverCheck_Square();
+                    default :
+                        return null;
+                }
+            }
+
+        }
+        private class IsCoverCheck_Circle : IsCoverCheck_Base
+        {
+            bool Check(bool[,] lattice, Point point, int range)
+            {
+                try
+                {
+                    int count = 0;
+                    for (int i = point.X - range; i <= point.X + range; i++)
+                    {
+                        for (int j = point.Y - range; j <= point.Y + range; j++)
+                        {
+                            if (
+                                (Math.Pow(Math.Abs(i - point.X), 2) + Math.Pow(Math.Abs(j - point.Y), 2)) <= range)
+                            {
+                                if (lattice[i, j] == true)
+                                    count++;
+                            }
+                        }
+                    }
+                    if (count > 5)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (Exception ex)
+                {
+                    
+                    return false;
+                }
+            }
+        }
+        private class IsCoverCheck_Square : IsCoverCheck_Base
+        {
+            bool Check(bool[,] lattice, Point point, int range)
+            {
+                try
+                {
+                    int count = 0;
+                    for (int i = point.X - range; i <= point.X + range; i++)
+                    {
+                        for (int j = point.Y - range; j <= point.Y + range; j++)
+                        {
+                            if (lattice[i, j] == true)
+                                count++;
+                        }
+                    }
+                    if (count > 5)
+                        return true;
+                    else
+                        return false;
+                }
+                catch (Exception ex)
+                {
+
+                    return false;
+                }
+            }
+        }
+        public enum CoverKind
+        {
+
+            Circle = 0,
+            Square = 1
         }
     }
 }
